@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EleventaNTierLayerV2.BusinessLogicLayer
+namespace EleventaNTierLayerV2.BusinessEntities
 {
-    public class Class1
+    public class Corte
     {
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EleventaNTierLayerV2.DataAccessLayer
 {
-    public class Class1
+    public class DepartamentoDAL
     {
     }
 }
