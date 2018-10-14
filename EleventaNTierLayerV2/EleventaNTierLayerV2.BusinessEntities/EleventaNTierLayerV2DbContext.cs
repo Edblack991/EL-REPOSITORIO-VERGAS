@@ -14,13 +14,14 @@ namespace EleventaNTierLayerV2.BusinessEntities
     {
         public EleventaNTierLayerV2DbContext() : base("EleventaNTierLayerV2DbContext")
         {
-
+            Database.SetInitializer<EleventaNTierLayerV2DbContext>(new EleventaNTierLayerV2DbInitializer());
         }
 
-        DbSet<Corte> Cortes { get; set; }
-        DbSet<Departamento> Departamentos { get; set; }
-        DbSet<Venta> Ventas { get; set; }
-        DbSet<Producto> Productos { get; set; }
+        public DbSet<Corte> Cortes { get; set; }
+        public DbSet<Departamento> Departamentos { get; set; }
+        public DbSet<Venta> Ventas { get; set; }
+        public DbSet<Producto> Productos { get; set; }
+        public DbSet<Empleado> Empleados { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

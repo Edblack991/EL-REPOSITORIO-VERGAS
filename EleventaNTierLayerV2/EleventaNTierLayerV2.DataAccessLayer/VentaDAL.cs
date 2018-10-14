@@ -8,5 +8,6 @@ namespace EleventaNTierLayerV2.DataAccessLayer
 {
     public class VentaDAL
     {
+
     }
 }
