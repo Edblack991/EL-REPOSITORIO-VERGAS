@@ -42,6 +42,9 @@ namespace EleventaNTierLayerV2.BusinessEntities
         [Required(ErrorMessage = "El campo es necesario")]
         public int InvMaxima { get; set; }
 
+        [Required(ErrorMessage = "El campo InventarioUser es obligatorio")]
+        public bool UsaInventario { get; set; }
+
         [ForeignKey("Departamento")]
         [Required(ErrorMessage = "Es necesaria para la coneccion")]
         public int IdDepartamento { get; set; }

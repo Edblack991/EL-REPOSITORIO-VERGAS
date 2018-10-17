@@ -3,7 +3,7 @@ namespace EleventaNTierLayerV2.BusinessEntities.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initial : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -20,10 +20,8 @@ namespace EleventaNTierLayerV2.BusinessEntities.Migrations
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Venta", t => t.IdVenta, cascadeDelete: true)
-                .Index(t => t.IdVenta)
-
-                ;
-
+                .Index(t => t.IdVenta);
+            
             CreateTable(
                 "dbo.Venta",
                 c => new
@@ -43,8 +41,7 @@ namespace EleventaNTierLayerV2.BusinessEntities.Migrations
                 .ForeignKey("dbo.Empleado", t => t.IdEmpleado, cascadeDelete: true)
                 .ForeignKey("dbo.Producto", t => t.IdProducto, cascadeDelete: true)
                 .Index(t => t.IdEmpleado)
-                .Index(t => t.IdProducto)
-                ;
+                .Index(t => t.IdProducto);
             
             CreateTable(
                 "dbo.Empleado",
@@ -71,11 +68,12 @@ namespace EleventaNTierLayerV2.BusinessEntities.Migrations
                         Ganancia = c.String(nullable: false, unicode: false),
                         InvMinima = c.Int(nullable: false),
                         InvMaxima = c.Int(nullable: false),
+                        UsaInventario = c.Boolean(nullable: false),
                         IdDepartamento = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Departamento", t => t.IdDepartamento, cascadeDelete: true)
-             .Index(t => t.IdDepartamento);
+                .Index(t => t.IdDepartamento);
             
             CreateTable(
                 "dbo.Departamento",
