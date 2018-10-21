@@ -56,12 +56,12 @@
   <ItemGroup>
     <Compile Include="Corte.cs" />
     <Compile Include="Departamento.cs" />
+    <Compile Include="Detalle_Venta.cs" />
     <Compile Include="EleventaNTierLayerV2DbContext.cs" />
-    <Compile Include="EleventaNTierLayerV2DbInitializer.cs" />
     <Compile Include="Empleado.cs" />
-    <Compile Include="Migrations\201810170123209_Initial.cs" />
-    <Compile Include="Migrations\201810170123209_Initial.Designer.cs">
-      <DependentUpon>201810170123209_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201810212118415_V2.cs" />
+    <Compile Include="Migrations\201810212118415_V2.Designer.cs">
+      <DependentUpon>201810212118415_V2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Producto.cs" />
@@ -75,8 +75,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201810170123209_Initial.resx">
-      <DependentUpon>201810170123209_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201810212118415_V2.resx">
+      <DependentUpon>201810212118415_V2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

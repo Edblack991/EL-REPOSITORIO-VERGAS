@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace EleventaNTierLayerV2.BusinessLogicLayer
 {
+    /// <summary>
+    /// clase para validar todos los dataAnnotations del proyecto ademas de aplicar las reglas del negocio
+    /// </summary>
     public class ProductoBLL
     {
         public static string InsertarProducto(Producto p)
@@ -56,14 +59,13 @@ namespace EleventaNTierLayerV2.BusinessLogicLayer
             return dt;
         }
 
-
         public static Producto Productos_Buscar(Producto p)
         {
 
             Producto px2 = new Producto();
 
             px2 = DataAccessLayer.ProductoDAL.BuscarProducto(p);
-
+ 
             return px2;
 
         }
@@ -132,6 +134,7 @@ namespace EleventaNTierLayerV2.BusinessLogicLayer
             return msgError;
 
         }
+
         public static DataTable Catalogo()
         {
 

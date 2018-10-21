@@ -14,30 +14,32 @@ namespace EleventaNTierLayerV2.DataAccessLayer
 
         public static DataTable CargarDepartamenTable()
         {
-            DataTable departaments = new DataTable();
+            DataTable departamentos = new DataTable();
 
-            var result = dbCtx.Departamentos.ToString();
+            var result = dbCtx.Departamentos.ToList();
 
-            departaments.Columns.AddRange(new DataColumn[]{
+            departamentos.Columns.AddRange(new DataColumn[]{
                     new DataColumn("Id", typeof(int)),
-                    new DataColumn("Nombre", typeof(string))
+                    new DataColumn("Nombre", typeof(string)),
+                    new DataColumn("Descripcion", typeof(string)),
             });
 
             result.ToList().ForEach(x =>
             {
                 //Variable para guardar las filas traidas de la base de datos.
-                var row = departaments.NewRow();
+                var row = departamentos.NewRow();
 
                 //Asignarle a cada columna los valores de las filas.
-                //row["Id"] = x.Id;
-                //row["Nombre"] = x.Nombre;
+                row["Id"] = x.Id;
+                row["Nombre"] = x.Nombre;
+                row["Descripcion"] = x.Descripcion; 
 
                 //Añadir las filas tomadas de la bd a mi datatable.
-                departaments.Rows.Add(row);
+                departamentos.Rows.Add(row);
 
             });
 
-            return departaments;
+            return departamentos;
         }
 
     }

@@ -191,6 +191,7 @@ namespace EleventaNTierLayerV2.DataAccessLayer
             return dt;
 
         }
+
         public static DataTable Catalogo()
         {
 
@@ -205,12 +206,10 @@ namespace EleventaNTierLayerV2.DataAccessLayer
                               join dep in Db.Departamentos on product.IdDepartamento equals dep.Id
                               select new
                               {
-
                                   product.Id,
                                   product.Descripcion,
                                   dep.Nombre,
                                   product.Precio
-
                               }).ToList();
 
                 dt.Columns.AddRange(new DataColumn[]
@@ -243,7 +242,7 @@ namespace EleventaNTierLayerV2.DataAccessLayer
         }
             #endregion
 
-            #region metodos para manipular el inventario
+        #region metodos para manipular el inventario
             /// <summary>
             /// Metodo de para traer los datos necesarios solicitados por el inventario 
             /// </summary>

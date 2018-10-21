@@ -84,8 +84,7 @@ namespace EleventaNTierLayerV2.ConsoleApp
                         "1.- Nuevo Producto.\n" +
                         "2.- Modificar Producto.\n" +
                         "3.- Eliminar Producto.\n" +
-                        "4.- Departamentos.\n" +
-                        "5.- Catalogo.\n");
+                        "4.- Catalogo.\n");
 
                     Operaciones = Convert.ToInt32(Console.ReadLine());
                 }
@@ -93,33 +92,6 @@ namespace EleventaNTierLayerV2.ConsoleApp
                 {
                 }
             } while (Operaciones > 5 || Operaciones < 1);
-
-            return Operaciones;
-        }
-        #endregion
-
-        #region Metodos para el manejo de Inventario
-        /// <summary>
-        /// Metodo para identificar que se espera hacer en el apartado Inventario
-        /// </summary>
-        /// <returns>Regresa la operacion deseada a realizar</returns>
-        public static int Identificar_Operacion3()
-        {
-            do
-            {
-                try
-                {
-                    Console.WriteLine("-Inventario-\n");
-                    Console.WriteLine("¿Que operacion desea realizar?\n" +
-                        "1.- Ver inventario.\n" +
-                        "2.- Modificar inventario.\n");
-
-                    Operaciones = Convert.ToInt32(Console.ReadLine());
-                }
-                catch (Exception ex)
-                {
-                }
-            } while (Operaciones > 2 || Operaciones < 1);
 
             return Operaciones;
         }
@@ -160,29 +132,12 @@ namespace EleventaNTierLayerV2.ConsoleApp
                 Console.Write("Ganancia: %"); p.Ganancia = Console.ReadLine();
                 Console.Write("Precio Mayoreo: "); p.PrecioMayoreo = Convert.ToDouble(Console.ReadLine());
 
-                do
-                {
+              
                     Console.Write("¿El producto usa Inventario?\n" +
                         "1.- Si.\n" +
                         "2.- No.\n");
 
                     useInv = Convert.ToInt32(Console.ReadLine());
-
-                    if (useInv == 1)
-                    {
-                        isCheked = true;
-                    }
-                    else if (useInv == 2)
-                    {
-                        isCheked = false;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Porfavor eliga una de las Opciones Mostradas");
-                    }
-
-                } while (useInv > 3 || useInv < 1);
-
 
                 p.UsaInventario = isCheked;
                 Console.Write("Cantidad: "); p.Cantidad = Convert.ToInt32(Console.ReadLine());
@@ -227,7 +182,6 @@ namespace EleventaNTierLayerV2.ConsoleApp
             Producto p = new Producto(); DataTable dt = new DataTable(); DataTable dep = new DataTable();
             Producto old = new Producto();
             int modificar, camp, cVen, Inv, mod; bool isCheked = false;
-            double pventa;
             string barcode = string.Empty;
 
             Console.WriteLine("\n");
@@ -251,8 +205,8 @@ namespace EleventaNTierLayerV2.ConsoleApp
                     foreach (DataRow item in dt.Rows)
                     {
 
-                        Console.WriteLine("\t1.- Id: {0}\n \t2.- Descripcion: {1}\n \t3.- Codigo de Barras: {2}\n \t4.- Departamento: {3}\n \t5.- Unidad de Venta: {4}\n \t6.- Costo: {5}\n \t7.- Ganancia: {6}\n \t8.- Precio: {7}\n \t9.- Precio al Mayoreo: {8}\n \t10.- Uso de Inventario: {9}\n \t11.- Cantidad: {10}\n \t12.- nventario Minimo: {11}\n \t13.- Inventario Maximo: {12}\n",
-                            item["Id"].ToString(), item["Descripcion"].ToString(), item["Codigo de Barras"].ToString(), item["Departamento"].ToString(), item["Unidad de Venta"].ToString(),
+                        Console.WriteLine("\t1.- Id: {0}\n \t2.- Descripcion: {1}\n \t3.- Codigo de Barras: {2}\n \t4.- Departamento: {3}\n \t5.- \t6.- Costo: {4}\n \t7.- Ganancia: {5}\n \t8.- Precio: {6}\n \t9.- Precio al Mayoreo: {7}\n \t10.- Uso de Inventario: {8}\n \t11.- Cantidad: {9}\n \t12.- nventario Minimo: {10}\n \t13.- Inventario Maximo: {11}\n",
+                            item["Id"].ToString(), item["Descripcion"].ToString(), item["Codigo de Barras"].ToString(), item["Departamento"].ToString(),
                             item["Costo"].ToString(), item["Ganancia"].ToString(), item["Precio"].ToString(), item["Precio al Mayoreo"].ToString(),
                             item["Uso de Inventario"].ToString(), item["Cantidad"].ToString(), item["Inventario Minimo"].ToString(), item["Inventario Maximo"].ToString());
 
@@ -465,8 +419,8 @@ namespace EleventaNTierLayerV2.ConsoleApp
                     foreach (DataRow item in dt.Rows)
                     {
 
-                        Console.WriteLine("\tId: {0}\n \tDescripcion: {1}\n \tCodigo de Barras: {2}\n \tDepartamento: {3}\n \tUnidad de Venta: {4}\n \tCosto: {5}\n \tGanancia: {6}\n \tPrecio: {7}\n \tPrecio al Mayoreo: {8}\n \tUso de Inventario: {9}\n \tCantidad: {10}\n \tInventario Minimo: {11}\n \tInventario Maximo: {12}\n",
-                            item["Id"].ToString(), item["Descripcion"].ToString(), item["Codigo de Barras"].ToString(), item["Departamento"].ToString(), item["Unidad de Venta"].ToString(),
+                        Console.WriteLine("\t1.- Id: {0}\n \t2.- Descripcion: {1}\n \t3.- Codigo de Barras: {2}\n \t4.- Departamento: {3}\n \t5.- \t6.- Costo: {4}\n \t7.- Ganancia: {5}\n \t8.- Precio: {6}\n \t9.- Precio al Mayoreo: {7}\n \t10.- Uso de Inventario: {8}\n \t11.- Cantidad: {9}\n \t12.- nventario Minimo: {10}\n \t13.- Inventario Maximo: {11}\n",
+                            item["Id"].ToString(), item["Descripcion"].ToString(), item["Codigo de Barras"].ToString(), item["Departamento"].ToString(),
                             item["Costo"].ToString(), item["Ganancia"].ToString(), item["Precio"].ToString(), item["Precio al Mayoreo"].ToString(),
                             item["Uso de Inventario"].ToString(), item["Cantidad"].ToString(), item["Inventario Minimo"].ToString(), item["Inventario Maximo"].ToString());
 
@@ -526,6 +480,7 @@ namespace EleventaNTierLayerV2.ConsoleApp
 
                 Console.WriteLine("\t1.- Id: {0}\n \t2.- Descripcion: {1}\n \t3.- Departamento: {2}\n \t4.- Precio: {3}\n",
                     item["Id"].ToString(), item["Descripcion"].ToString(), item["Departamento"].ToString(), item["Precio $"].ToString());
+                Console.Read();
 
             }
         }
@@ -536,7 +491,7 @@ namespace EleventaNTierLayerV2.ConsoleApp
         {
 
             DataTable dt = new DataTable(); Producto p = new Producto(); Producto product = new Producto();
-            string BarCode; int res, camp, mod; double pVenta;
+            string BarCode; int res, camp, mod; 
 
             Console.Write("Ingresa el codigo de Barras: "); BarCode = Console.ReadLine().ToString().Trim();
             product.CodigoBarras = BarCode;
@@ -633,7 +588,7 @@ namespace EleventaNTierLayerV2.ConsoleApp
                     if (string.IsNullOrEmpty(msgError))
                     {
 
-                        Console.WriteLine("\n\t EL INVENTARIO SE MODIFICO EXITOSA MENTE");
+                        Console.WriteLine("\n\t EL INVENTARIO SE MODIFICO EXITOSAMENTE");
                         Console.ReadLine();
 
                     }
@@ -667,42 +622,36 @@ namespace EleventaNTierLayerV2.ConsoleApp
 
         static void Main(string[] args)
         {
-            Identificar_Categoria();
+            do {
+                Identificar_Categoria();
 
-            switch (Categoria)
-            {
-                case 1:
-                    do
-                    {
+                switch (Categoria)
+                {
+                    case 1:
                         Identificar_Operacion1();
 
                         switch (Operaciones)
                         {
                             case 1:
+                                Console.Clear();
                                 Agregar_Producto();
                                 break;
                             case 2:
+                                Console.Clear();
                                 Cobrar_Producto();
                                 break;
                             case 3:
+                                Console.Clear();
                                 CAJA();
                                 break;
                             case 4:
+                                Console.Clear();
                                 PRECIO();
                                 break;
                         }
+                        break;
 
-                        Console.WriteLine("Desea Realizar otra operacion?:\n" +
-                            "1.- Si.\n" +
-                            "2.- No.");
-
-                        Desicion = Console.Read();
-                    } while (Desicion != 1);
-                    break;
-
-                case 2:
-                    do
-                    {
+                    case 2:
                         Identificar_Operacion2();
 
                         switch (Operaciones)
@@ -724,32 +673,21 @@ namespace EleventaNTierLayerV2.ConsoleApp
                                 View_Catalogo();
                                 break;
                         }
+                        break;
 
+                    case 3:
                         Console.Clear();
-
-                        Console.WriteLine("Desea Realizar otra operacion?:\n" +
-                            "1.- Si.\n" +
-                            "2.- No.");
-
-                        Desicion = Console.Read();
-                    } while (Desicion != 1);
-                    break;
-
-                case 3:
-                    do
-                    {
                         View_Inventario();
+                        break;
 
-                        Console.WriteLine("Desea Realizar otra operacion?:\n" +
-                            "1.- Si.\n" +
-                            "2.- No.");
+                }
 
-                        Desicion = Console.Read();
-                    } while (Desicion != 1);
-                    break;
+                Console.WriteLine("Desea Realizar otra operacion?:\n" +
+                 "1.- Si.\n" +
+                 "2.- No.");
+                Desicion = Console.Read();
 
-            }
- 
+            } while (Desicion == 1);
             Console.ReadKey();
         }
         

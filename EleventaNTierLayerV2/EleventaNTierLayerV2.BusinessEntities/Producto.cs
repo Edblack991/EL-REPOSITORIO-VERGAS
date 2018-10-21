@@ -51,5 +51,6 @@ namespace EleventaNTierLayerV2.BusinessEntities
         public Departamento Departamento { get; set; }
 
         public virtual ICollection<Venta> Ventas { get; set; }
+        public virtual ICollection<Detalle_Venta> Detalle_Ventas { get; set; }
     }
 }

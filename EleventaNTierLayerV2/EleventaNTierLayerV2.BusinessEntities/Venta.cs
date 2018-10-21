@@ -46,7 +46,7 @@ namespace EleventaNTierLayerV2.BusinessEntities
         public DateTime Fecha { get; set; }
 
         public virtual ICollection<Corte> Cortes { get; set; }
-
+        public virtual ICollection<Detalle_Venta> Detalle_Ventas { get; set; }
 
     }
 }

@@ -14,7 +14,7 @@ namespace EleventaNTierLayerV2.BusinessEntities
     {
         public EleventaNTierLayerV2DbContext() : base("EleventaNTierLayerV2DbContext")
         {
-            Database.SetInitializer<EleventaNTierLayerV2DbContext>(new EleventaNTierLayerV2DbInitializer());
+            //Database.SetInitializer<EleventaNTierLayerV2DbContext>(new EleventaNTierLayerV2DbInitializer());
         }
 
         public DbSet<Corte> Cortes { get; set; }
