@@ -75,13 +75,6 @@ namespace EleventaNTierLayerV2.BusinessEntities.Migrations
                     context.SaveChanges();
                     //----------------------------------------------------------------------------------------------------------------------------
 
-                    List<Empleado> empleados = new List<Empleado>();
-                    empleados.Add(new Empleado() { Nombre = "Edgar Gonzalez", Puesto = "Gerente", Caja = 1 });
-
-                    context.Empleados.AddRange(empleados);
-                    context.SaveChanges();
-                    //----------------------------------------------------------------------------------------------------------------------------
-
                     //                   List<Corte> corte = new List<Corte>();
                     //                   corte.Add(new Corte() { FondoInicial = 500 , CantidadFinal = 2000,  Diferencia = 1500 , Fecha = DateTime.Now,
                     //                       IdVenta =  });
@@ -118,8 +111,5 @@ namespace EleventaNTierLayerV2.BusinessEntities.Migrations
             }
             base.Seed(context);
         }
-
-
     }
-}
-
+    }

@@ -27,21 +27,13 @@ namespace EleventaNTierLayerV2.BusinessEntities.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        NumeroArticulos = c.Int(nullable: false),
-                        IdProducto = c.Int(nullable: false),
-                        SubTotal = c.Double(nullable: false),
-                        Iva = c.Double(nullable: false),
-                        Total = c.Double(nullable: false),
-                        Pago = c.Double(nullable: false),
-                        Cambio = c.Double(nullable: false),
-                        IdEmpleado = c.Int(nullable: false),
+                        Sucursal = c.String(nullable: false, unicode: false),
                         Fecha = c.DateTime(nullable: false, precision: 0),
+                        Importe = c.Double(nullable: false),
+                        CantidadDeArticulos = c.Int(nullable: false),
+                        Caja = c.String(unicode: false),
                     })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Empleado", t => t.IdEmpleado, cascadeDelete: true)
-                .ForeignKey("dbo.Producto", t => t.IdProducto, cascadeDelete: true)
-                .Index(t => t.IdEmpleado)
-                .Index(t => t.IdProducto);
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.Detalle_Venta",
@@ -90,34 +82,18 @@ namespace EleventaNTierLayerV2.BusinessEntities.Migrations
                     })
                 .PrimaryKey(t => t.Id);
             
-            CreateTable(
-                "dbo.Empleado",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Nombre = c.String(nullable: false, unicode: false),
-                        Puesto = c.String(nullable: false, unicode: false),
-                        Caja = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id);
-            
         }
         
         public override void Down()
         {
             DropForeignKey("dbo.Corte", "IdVenta", "dbo.Venta");
-            DropForeignKey("dbo.Venta", "IdProducto", "dbo.Producto");
-            DropForeignKey("dbo.Venta", "IdEmpleado", "dbo.Empleado");
             DropForeignKey("dbo.Detalle_Venta", "IdVenta", "dbo.Venta");
             DropForeignKey("dbo.Detalle_Venta", "IdProducto", "dbo.Producto");
             DropForeignKey("dbo.Producto", "IdDepartamento", "dbo.Departamento");
             DropIndex("dbo.Corte", new[] { "IdVenta" });
-            DropIndex("dbo.Venta", new[] { "IdProducto" });
-            DropIndex("dbo.Venta", new[] { "IdEmpleado" });
             DropIndex("dbo.Detalle_Venta", new[] { "IdVenta" });
             DropIndex("dbo.Detalle_Venta", new[] { "IdProducto" });
             DropIndex("dbo.Producto", new[] { "IdDepartamento" });
-            DropTable("dbo.Empleado");
             DropTable("dbo.Departamento");
             DropTable("dbo.Producto");
             DropTable("dbo.Detalle_Venta");

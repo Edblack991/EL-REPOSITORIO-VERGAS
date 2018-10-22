@@ -21,7 +21,7 @@ namespace EleventaNTierLayerV2.BusinessEntities
         public DbSet<Departamento> Departamentos { get; set; }
         public DbSet<Venta> Ventas { get; set; }
         public DbSet<Producto> Productos { get; set; }
-        public DbSet<Empleado> Empleados { get; set; }
+        public DbSet<Detalle_Venta> Detalle_Ventas { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

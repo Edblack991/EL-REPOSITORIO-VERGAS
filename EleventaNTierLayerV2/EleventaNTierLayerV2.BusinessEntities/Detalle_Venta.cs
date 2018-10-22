@@ -27,6 +27,7 @@ namespace EleventaNTierLayerV2.BusinessEntities
         [DataType(DataType.Text)]
         public int Cantidad { get; set; }
 
-        public Double Total { get; set; }
+        [Required(ErrorMessage ="El campo total es obligatorio")]
+        public double Total { get; set; }
     }
 }

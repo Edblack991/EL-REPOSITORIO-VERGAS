@@ -13,7 +13,7 @@ namespace EleventaNTierLayerV2.BusinessEntities.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201810212118415_V2"; }
+            get { return "201810220053066_V2"; }
         }
         
         string IMigrationMetadata.Source

@@ -13,6 +13,12 @@ namespace EleventaNTierLayerV2.ConsoleApp
         /// Variables utilizadas en los ciclos
         /// </summary>
         public static int Categoria, Operaciones, Desicion;
+        public static int CantidadDeArticulos = 0;
+        public static double subtotal = 0;
+        public static double iva = 0;
+        public static double total = 0;
+        public static string codeBar;
+        public static int quantity;
 
         /// <summary>  
         /// Metodo Identificar categoria 
@@ -27,8 +33,7 @@ namespace EleventaNTierLayerV2.ConsoleApp
                     Console.WriteLine("¿Que categoria desea operar?\n" +
                         "1.- Ventas.\n" +
                         "2.- Productos.\n" +
-                        "3.- Inventario.");
-
+                        "3.- Inventario.\n");
                     Categoria = Convert.ToInt32(Console.ReadLine());
                 }
                 catch (Exception ex)
@@ -38,35 +43,6 @@ namespace EleventaNTierLayerV2.ConsoleApp
 
             return Categoria;
         }
-
-        #region Metodos para el manejo de Ventas
-        /// <summary>
-        /// Metodo para identificar que se espera hacer en el apartado ventas
-        /// </summary>
-        /// <returns>Regresa la operacion deseada a realizar</returns>
-        public static int Identificar_Operacion1()
-        {
-            do
-            {
-                try
-                {
-                    Console.WriteLine("-Ventas-\n");
-                    Console.WriteLine("¿Que operacion desea realizar?\n" +
-                        "1.- Agregar producto.\n" +
-                        "2.- Cobrar Producto.\n" +
-                        "3.- Entrada/Salida de caja.\n" +
-                        "4.- Verificador de precio.\n");
-
-                    Operaciones = Convert.ToInt32(Console.ReadLine());
-                }
-                catch (Exception ex)
-                {
-                }
-            } while (Operaciones > 4 || Operaciones < 1);
-
-            return Operaciones;
-        }
-        #endregion
 
         #region Metodos para el manejo de Productos
         /// <summary>
@@ -98,22 +74,174 @@ namespace EleventaNTierLayerV2.ConsoleApp
         #endregion
 
         #region Metodos VENTAS
-        public static void Agregar_Producto()
+        public static void Cobrar_Producto(DataTable dt,string codeBar,int quantity)
+        {
+            Console.Clear();
+
+            Producto p = new Producto();
+            string CodBar = string.Empty;
+            int resp;
+            do
+            {
+
+                Console.Clear();
+
+                Console.Write("\nCodigo de Barras: "); CodBar = Console.ReadLine();
+
+                BuscarProducto(CodBar, dt);
+
+                ExtensionDataTable.PrintToConsole(dt);
+
+                Console.WriteLine("\n");
+
+                ImprimirTabla();
+
+                Console.WriteLine("\n¿Desea Ingresar  otro Articulo?\n"
+                                     + "1.- Si\n"
+                                     + "2.- No");
+                resp = Convert.ToInt32(Console.ReadLine());
+
+            } while (resp == 1);
+
+            if (resp == 2)
+            {
+                Console.Clear();
+
+                string msgError = string.Empty;
+
+                Venta v = new Venta();
+
+                v.Sucursal = "Gral Escobedo";
+                v.Fecha = DateTime.Now;
+                v.Importe = total;
+                v.CantidadDeArticulos = CantidadDeArticulos;
+                v.Caja = "1";
+
+                msgError = BusinessLogicLayer.VentaBLL.RealizarVenta(v);
+
+                if (string.IsNullOrEmpty(msgError))
+                {
+                    int saleId = BusinessLogicLayer.VentaBLL.UltimoRegistro();
+
+                    if (saleId > 0)
+                    {
+
+                        foreach (DataRow row in dt.Rows)
+                        {
+
+                            Detalle_Venta d = new Detalle_Venta();
+
+                            d.IdVenta = saleId;
+                            d.IdProducto = Convert.ToInt32(BusinessLogicLayer.ProductoBLL.ProductoCodigoId(row["Codigo Barras"].ToString()));
+                            d.Cantidad = Convert.ToInt32(row["Cantidad"].ToString());
+                            d.Total = Convert.ToDouble(row["Total"].ToString());
+
+                            bool isCheked = BusinessLogicLayer.Detalle_VentaBLL.insertar(d);
+
+                            BusinessLogicLayer.ProductoBLL.ModificarInventarioVenta(codeBar,quantity);
+
+                            if (isCheked)
+                            {
+
+                                Console.WriteLine("\n\tCOMPRA REALIZADA");
+                                Console.WriteLine("\n\tREGRESE PRONTO LO ESTAREMOS ESPERANDO");
+
+                            }
+                        }
+                    }
+
+                }
+                else
+                {
+                    Console.WriteLine(msgError);
+                    Console.ReadLine();
+                }
+            }
+        }
+
+        public static void ImprimirTabla()
         {
 
-        }
-        public static void Cobrar_Producto()
-        {
+            DataTable dt = new DataTable();
+
+            dt.Columns.AddRange(new DataColumn[]
+            {
+
+                new DataColumn("TIPO_PAGO", typeof(string)),
+                new DataColumn("CANTIDAD_ARTICULOS", typeof(int)),
+                new DataColumn("SUBTOTAL", typeof(string)),
+                new DataColumn("IVA", typeof(string)),
+                new DataColumn("TOTAL", typeof(string))
+
+            });
+
+            var row = dt.NewRow();
+
+            row["TIPO_PAGO"] = "EFECTIVO";
+            row["CANTIDAD_ARTICULOS"] = CantidadDeArticulos;
+            row["SUBTOTAL"] = "$ " + subtotal;
+            row["IVA"] = "$ " + iva;
+            row["TOTAL"] = "$ " + total;
+
+            dt.Rows.Add(row);
+
+            ExtensionDataTable.PrintToConsole(dt);
+
 
         }
-        public static void CAJA()
+
+        public static void BuscarProducto(string Codebar, DataTable dt)
         {
 
-        }
-        public static void PRECIO()
-        {
+            Producto p = new Producto();
+
+            p = BusinessLogicLayer.ProductoBLL.ProductoCodigo(Codebar);
+
+            if (p != null)
+            {
+
+                var row = dt.NewRow();
+
+                row["Codigo Barras"] = p.CodigoBarras;
+                row["Descripcion"] = p.Descripcion;
+                row["CANTIDAD"] = 1;
+                row["Precio Unitario"] = p.Precio;
+                row["Total"] = (p.Precio * .16) + p.Precio;
+
+                dt.Rows.Add(row);
+
+                CantidadDeArticulos = CantidadDeArticulos + 1;
+                subtotal = subtotal + Convert.ToDouble(row["Precio Unitario"].ToString());
+                iva = iva + Convert.ToDouble(row["Precio Unitario"]) * .16;
+                total = total + Convert.ToDouble(row["Total"].ToString());
+
+            }
+            else
+            {
+
+                Console.WriteLine("\n\tNo se pudo encontrar el producto");
+                Console.ReadLine();
+
+            }
 
         }
+
+        public static void Actualizar(DataTable dt)
+        {
+
+            dt.Columns.AddRange(new DataColumn[]
+{
+
+                    new DataColumn("Codigo Barras", typeof(string)),
+                    new DataColumn("Descripcion", typeof(string)),
+                    new DataColumn("CANTIDAD", typeof(string)),
+                    new DataColumn("Precio Unitario", typeof(double)),
+                    new DataColumn("Total", typeof(double))
+
+            });
+
+        }
+
         #endregion
 
         #region Metodos PRODUCTOS
@@ -141,8 +269,8 @@ namespace EleventaNTierLayerV2.ConsoleApp
 
                 p.UsaInventario = isCheked;
                 Console.Write("Cantidad: "); p.Cantidad = Convert.ToInt32(Console.ReadLine());
-                Console.Write("Inventario Minimo"); p.InvMinima = Convert.ToInt32(Console.ReadLine());
-                Console.Write("Inventario Maximo"); p.InvMaxima = Convert.ToInt32(Console.ReadLine());
+                Console.Write("Inventario Minimo "); p.InvMinima = Convert.ToInt32(Console.ReadLine());
+                Console.Write("Inventario Maximo "); p.InvMaxima = Convert.ToInt32(Console.ReadLine());
 
                 dt = BusinessLogicLayer.DepartamentoBLL.CargarDepartamenTable();
 
@@ -622,33 +750,17 @@ namespace EleventaNTierLayerV2.ConsoleApp
 
         static void Main(string[] args)
         {
+            DataTable dt = new DataTable();
             do {
                 Identificar_Categoria();
 
                 switch (Categoria)
                 {
                     case 1:
-                        Identificar_Operacion1();
+                            Actualizar(dt);
+                            Cobrar_Producto(dt,codeBar,quantity);
+                        Console.Write("-----------------------------------------------------------");
 
-                        switch (Operaciones)
-                        {
-                            case 1:
-                                Console.Clear();
-                                Agregar_Producto();
-                                break;
-                            case 2:
-                                Console.Clear();
-                                Cobrar_Producto();
-                                break;
-                            case 3:
-                                Console.Clear();
-                                CAJA();
-                                break;
-                            case 4:
-                                Console.Clear();
-                                PRECIO();
-                                break;
-                        }
                         break;
 
                     case 2:
@@ -659,18 +771,22 @@ namespace EleventaNTierLayerV2.ConsoleApp
                             case 1:;
                                 Console.Clear();
                                 New_Product();
+                                Console.Write("-----------------------------------------------------------");
                                 break;
                             case 2:
                                 Console.Clear();
                                 Update_Producto();
+                                Console.Write("-----------------------------------------------------------");
                                 break;
                             case 3:
                                 Console.Clear();
                                 Delete_Producto();
+                                Console.Write("-----------------------------------------------------------");
                                 break;
                             case 4:
                                 Console.Clear();
                                 View_Catalogo();
+                                Console.Write("-----------------------------------------------------------");
                                 break;
                         }
                         break;
@@ -678,13 +794,16 @@ namespace EleventaNTierLayerV2.ConsoleApp
                     case 3:
                         Console.Clear();
                         View_Inventario();
+                        Console.Write("-----------------------------------------------------------");
                         break;
 
                 }
 
+                Console.Write("==============================================================================");
                 Console.WriteLine("Desea Realizar otra operacion?:\n" +
                  "1.- Si.\n" +
                  "2.- No.");
+                Console.Write("==============================================================================");
                 Desicion = Console.Read();
 
             } while (Desicion == 1);

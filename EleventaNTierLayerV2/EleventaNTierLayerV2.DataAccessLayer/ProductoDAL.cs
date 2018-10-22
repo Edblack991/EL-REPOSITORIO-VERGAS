@@ -117,13 +117,55 @@ namespace EleventaNTierLayerV2.DataAccessLayer
         }
         #endregion
 
+        #region para detalle venta
+        /// <summary>
+        /// Metodo para buscar un producto para realizar la venta con codigo de barras
+        /// </summary>
+        /// <param name="barCode"></param>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public static Producto ProductoCodigo(string barCode)
+        {
+            Producto p;
+
+            using (EleventaNTierLayerV2DbContext Db = new EleventaNTierLayerV2DbContext())
+            {
+
+                p = Db.Productos.Where(x => x.CodigoBarras == barCode).SingleOrDefault();
+            }
+
+            return p;
+        }
+
+        /// <summary>
+        /// metodo para traer el id del producto
+        /// </summary>
+        /// <param name="codBar"></param>
+        /// <returns></returns>
+        public static int ProductoCodigoId(string codBar)
+        {
+            int ProductoId;
+
+            using (EleventaNTierLayerV2DbContext dbCtx = new EleventaNTierLayerV2DbContext())
+            {
+
+                ProductoId = dbCtx.Productos.Where(x => x.CodigoBarras == codBar).First().Id;
+
+            }
+
+            return ProductoId;
+
+        }
+
+        #endregion
+
         #region DataTables que se van a necesitar para los procesos
         /// <summary>
         /// Metodo que nos trae de manera ordenada los datos mediante una consulta
         /// </summary>
         /// <param name="CodigoBarras">se utiliza para mandar a llamar el objeto filtrado por el codigo de barras</param>
         /// <returns>regresara los datos obtenidos a travez de la consulta</returns>
-        
+
         public static DataTable Productos(string CodigoBarras)
         {
 
@@ -326,6 +368,29 @@ namespace EleventaNTierLayerV2.DataAccessLayer
 
             return isCheked;
 
+        }
+
+        /// <summary>
+        /// metodo para poder modificar el stock
+        /// </summary>
+        /// <param name="codeBar"></param>
+        /// <param name="quantity"></param>
+        public static void ModificarInventarioVenta(string codeBar, int quantity)
+        {
+            using(EleventaNTierLayerV2DbContext Db = new EleventaNTierLayerV2DbContext())
+            {
+                Producto p = new Producto();
+
+                p = Db.Productos.Where(x => x.CodigoBarras == codeBar).SingleOrDefault();
+
+                int stock_actual = p.Cantidad - quantity;
+
+                p.Cantidad = stock_actual;
+
+                Db.Entry(p).State = System.Data.Entity.EntityState.Modified;
+
+                Db.SaveChanges();
+            }
         }
         #endregion
     }

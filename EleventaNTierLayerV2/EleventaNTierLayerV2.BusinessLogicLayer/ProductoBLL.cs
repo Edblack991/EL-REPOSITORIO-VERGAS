@@ -145,6 +145,28 @@ namespace EleventaNTierLayerV2.BusinessLogicLayer
             return dt;
 
         }
+
+        public static Producto ProductoCodigo(string CodeBar)
+        {
+
+            Producto p = null;
+
+            return p = DataAccessLayer.ProductoDAL.ProductoCodigo(CodeBar);
+
+        }
+
+        public static int ProductoCodigoId(string codeBar)
+        {
+
+            return DataAccessLayer.ProductoDAL.ProductoCodigoId(codeBar);
+
+        
+}
+
+        public static void ModificarInventarioVenta(string codeBar, int quantity)
+        {
+            DataAccessLayer.ProductoDAL.ModificarInventarioVenta(codeBar,quantity);
+        }
         /// <summary>
         /// Metodo que nos servira para validar los DataAnnotation del proyecto BusinessEntities.
         /// </summary>
