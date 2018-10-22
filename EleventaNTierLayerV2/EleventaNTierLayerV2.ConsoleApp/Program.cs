@@ -138,6 +138,9 @@ namespace EleventaNTierLayerV2.ConsoleApp
 
                             bool isCheked = BusinessLogicLayer.Detalle_VentaBLL.insertar(d);
 
+                            codeBar = row["Codigo Barras"].ToString();
+                            quantity = 1;
+
                             BusinessLogicLayer.ProductoBLL.ModificarInventarioVenta(codeBar,quantity);
 
                             if (isCheked)
@@ -145,6 +148,7 @@ namespace EleventaNTierLayerV2.ConsoleApp
 
                                 Console.WriteLine("\n\tCOMPRA REALIZADA");
                                 Console.WriteLine("\n\tREGRESE PRONTO LO ESTAREMOS ESPERANDO");
+                                Console.WriteLine("");
 
                             }
                         }
@@ -759,8 +763,6 @@ namespace EleventaNTierLayerV2.ConsoleApp
                     case 1:
                             Actualizar(dt);
                             Cobrar_Producto(dt,codeBar,quantity);
-                        Console.Write("-----------------------------------------------------------");
-
                         break;
 
                     case 2:
@@ -794,18 +796,14 @@ namespace EleventaNTierLayerV2.ConsoleApp
                     case 3:
                         Console.Clear();
                         View_Inventario();
-                        Console.Write("-----------------------------------------------------------");
                         break;
 
                 }
 
-                Console.Write("==============================================================================");
                 Console.WriteLine("Desea Realizar otra operacion?:\n" +
                  "1.- Si.\n" +
                  "2.- No.");
-                Console.Write("==============================================================================");
                 Desicion = Console.Read();
-
             } while (Desicion == 1);
             Console.ReadKey();
         }
