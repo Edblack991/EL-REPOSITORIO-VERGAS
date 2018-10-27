@@ -326,7 +326,7 @@ namespace EleventaNTierLayerV2.ConsoleApp
             {
 
                 dt = BusinessLogicLayer.ProductoBLL.Productos(barcode);
-                p = BusinessLogicLayer.ProductoBLL.Productos_Buscar(old);
+                p = BusinessLogicLayer.ProductoBLL.BuscarProductos(old);
 
                 if (p != null)
                 {
@@ -493,7 +493,7 @@ namespace EleventaNTierLayerV2.ConsoleApp
 
                         } while (mod == 1);
 
-                        string msgError = BusinessLogicLayer.ProductoBLL.Modificar_Producto(p);
+                        string msgError = BusinessLogicLayer.ProductoBLL.ProductoModificar(p);
 
                         if (string.IsNullOrEmpty(msgError))
                         {
@@ -541,7 +541,7 @@ namespace EleventaNTierLayerV2.ConsoleApp
             {
 
                 dt = BusinessLogicLayer.ProductoBLL.Productos(p.CodigoBarras);
-                p = BusinessLogicLayer.ProductoBLL.Productos_Buscar(p);
+                p = BusinessLogicLayer.ProductoBLL.BuscarProductos(p);
 
                 if (p != null)
                 {
@@ -566,7 +566,7 @@ namespace EleventaNTierLayerV2.ConsoleApp
                     if (delete == 1)
                     {
 
-                        string msgError = BusinessLogicLayer.ProductoBLL.ProductoEliminar(p.CodigoBarras);
+                        string msgError = BusinessLogicLayer.ProductoBLL.EliminarProducto(p.CodigoBarras);
 
                         if (string.IsNullOrEmpty(msgError))
                         {
@@ -630,8 +630,8 @@ namespace EleventaNTierLayerV2.ConsoleApp
             try
             {
 
-                dt = BusinessLogicLayer.ProductoBLL.Select_Inventario(BarCode);
-                p = BusinessLogicLayer.ProductoBLL.Productos_Buscar(product);
+                dt = BusinessLogicLayer.ProductoBLL.InventarioSelec(BarCode);
+                p = BusinessLogicLayer.ProductoBLL.BuscarProductos(product);
 
                 if (p != null)
                 {
@@ -715,7 +715,7 @@ namespace EleventaNTierLayerV2.ConsoleApp
 
                     } while (mod == 1);
 
-                    string msgError = BusinessLogicLayer.ProductoBLL.Modificar_Inventario(p);
+                    string msgError = BusinessLogicLayer.ProductoBLL.ModifiInventario(p);
 
                     if (string.IsNullOrEmpty(msgError))
                     {

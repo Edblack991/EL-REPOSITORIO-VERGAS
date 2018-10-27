@@ -23,10 +23,8 @@ namespace EleventaNTierLayerV2.DataAccessLayer
 
             using (EleventaNTierLayerV2DbContext Db = new EleventaNTierLayerV2DbContext())
             {
-                //Insertar un metodo en el contexto
                 Db.Productos.Add(p);
 
-                //Validamos la insercion correctamente
                 isInserted = Db.SaveChanges() > 0 ;
 
                 return isInserted;
@@ -165,7 +163,6 @@ namespace EleventaNTierLayerV2.DataAccessLayer
         /// </summary>
         /// <param name="CodigoBarras">se utiliza para mandar a llamar el objeto filtrado por el codigo de barras</param>
         /// <returns>regresara los datos obtenidos a travez de la consulta</returns>
-
         public static DataTable Productos(string CodigoBarras)
         {
 
@@ -233,7 +230,10 @@ namespace EleventaNTierLayerV2.DataAccessLayer
             return dt;
 
         }
-
+        /// <summary>
+        /// DATATABLE para traer los productos y mostrarlos dentro del catalogo 
+        /// </summary>
+        /// <returns></returns>
         public static DataTable Catalogo()
         {
 

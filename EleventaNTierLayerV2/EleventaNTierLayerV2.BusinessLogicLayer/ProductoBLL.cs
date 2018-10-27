@@ -14,28 +14,24 @@ namespace EleventaNTierLayerV2.BusinessLogicLayer
     /// </summary>
     public class ProductoBLL
     {
+        /// <summary>
+        /// Validar la insercion del producto en la base de datos
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
         public static string InsertarProducto(Producto p)
         {
 
-            //variable para mostrar errores sugeridos dentro de las validaciones
             string msgError = String.Empty;
 
-            //Coleccion para recuperar los mensajes de error ocurridos por los DataAnnotations
             ICollection<ValidationResult> results = null;
 
-            //Aquise debe colocar la condicional recibiendo como parametros la entidad que se quiere
-            //validar y la coleccion anteriormente creada, ambos parametros deberan ir en
-            //el metodo validate
             if (!Validate(p, out results))
             {
-                //En caso de si existir errores de los DataAnnotatios se debera guardar ese
-                //ese error en la variable string creada
                 msgError = String.Join("\n", results.Select(o => o.ErrorMessage));
             }
             else
             {
-                //En caso de no exixistir ningun error, se procedera a contiuar con el proceso
-                //Deberemos implementar un try-catch para recuperar errores no contrlados
                 try
                 {
                     bool isInserted = DataAccessLayer.ProductoDAL.InsertarProducto(p);
@@ -49,7 +45,11 @@ namespace EleventaNTierLayerV2.BusinessLogicLayer
             }
             return msgError;
         }
-
+        /// <summary>
+        /// Validar el metodo para mostrar los productos mediante una consulta en cuanto al codigo de barras
+        /// </summary>
+        /// <param name="CodigoBarras"></param>
+        /// <returns></returns>
         public static DataTable Productos(string CodigoBarras)
         {
             DataTable dt = new DataTable();
@@ -58,8 +58,12 @@ namespace EleventaNTierLayerV2.BusinessLogicLayer
 
             return dt;
         }
-
-        public static Producto Productos_Buscar(Producto p)
+        /// <summary>
+        /// metodo que valida la informacion atraida para buscar un producto deseado
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public static Producto BuscarProductos(Producto p)
         {
 
             Producto px2 = new Producto();
@@ -69,8 +73,12 @@ namespace EleventaNTierLayerV2.BusinessLogicLayer
             return px2;
 
         }
-
-        public static string ProductoEliminar(string CodeBar)
+        /// <summary>
+        /// metodo para validar la eliminacion de un producto 
+        /// </summary>
+        /// <param name="CodeBar"></param>
+        /// <returns></returns>
+        public static string EliminarProducto(string CodeBar)
         {
 
             string msgError = string.Empty;
@@ -87,8 +95,12 @@ namespace EleventaNTierLayerV2.BusinessLogicLayer
             return msgError;
 
         }
-
-        public static string Modificar_Producto(Producto p)
+        /// <summary>
+        /// metodo para validar la modificacion del producto mediante el parametro p 
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public static string ProductoModificar(Producto p)
         {
 
             string msgError = string.Empty;
@@ -105,8 +117,12 @@ namespace EleventaNTierLayerV2.BusinessLogicLayer
             return msgError;
 
         }
-
-        public static DataTable Select_Inventario(string Codebar)
+        /// <summary>
+        /// metodo para ordenar y ver los productos en el inventario mediante el codigo de barras
+        /// </summary>
+        /// <param name="Codebar"></param>
+        /// <returns></returns>
+        public static DataTable InventarioSelec(string Codebar)
         {
 
             DataTable dt = new DataTable();
@@ -116,8 +132,12 @@ namespace EleventaNTierLayerV2.BusinessLogicLayer
             return dt;
 
         }
-
-        public static string Modificar_Inventario(Producto p)
+        /// <summary>
+        /// metodo para lograr la modificacion del inventario
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public static string ModifiInventario(Producto p)
         {
 
             string msgError = string.Empty;
@@ -134,7 +154,10 @@ namespace EleventaNTierLayerV2.BusinessLogicLayer
             return msgError;
 
         }
-
+        /// <summary>
+        /// metodo para validar el catalogo atraido 
+        /// </summary>
+        /// <returns></returns>
         public static DataTable Catalogo()
         {
 
@@ -167,6 +190,7 @@ namespace EleventaNTierLayerV2.BusinessLogicLayer
         {
             DataAccessLayer.ProductoDAL.ModificarInventarioVenta(codeBar,quantity);
         }
+
         /// <summary>
         /// Metodo que nos servira para validar los DataAnnotation del proyecto BusinessEntities.
         /// </summary>
